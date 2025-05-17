@@ -1,5 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
+import bootstrap from 'bootstrap'; // needed for responsive components
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from "react-router";
 import { Provider } from 'react-redux';
@@ -10,6 +11,11 @@ import './index.css';
 import Login from './components/login';
 import { Dashboard } from './components/dashboard';
 import { CreatePoll } from './components/create_poll';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { faCheckSquare, faUser } from '@fortawesome/free-solid-svg-icons';
+
+library.add(fab, faCheckSquare, faUser);
 
 const container = document.getElementById('root');
 const root = createRoot(container);
