@@ -11,6 +11,7 @@ import './index.css';
 import Login from './components/login';
 import { Dashboard } from './components/dashboard';
 import { CreatePoll } from './components/create_poll';
+import { QuestionDetail } from './components/question_detail';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { faCheckSquare, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -28,6 +29,7 @@ root.render(
         <Route path="/" element={<Login />} />
         <Route path="/create" element={<CreatePoll />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/question/:question_id" element={<QuestionDetail />} />
     </Routes>
     </Provider>
     </BrowserRouter>
