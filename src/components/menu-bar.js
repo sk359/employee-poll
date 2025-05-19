@@ -29,15 +29,20 @@ export function MenuBar() {
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item" style={{marginRight: "15px"}}>
-                      <Link to="/dashboard">Dashboardn</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li class="nav-item" style={{marginRight: "15px"}}>
                       <Link to="/create">Create Poll</Link>
+                    </li>    
+                    <li class="nav-item" style={{marginRight: "15px"}}>
+                      <Link to="/leaderboard">Leaderboard</Link>
                     </li>        
-                    <li id="menubar-user-icon" class="nav-item btn-group dropstart" style={{padding: "5px"}}>
+                    <li id="menubar-user-icon" class="nav-item btn-group dropstart" style={{padding: "15px"}}>
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><FontAwesomeIcon icon="user" /></a>
-                      <ul class="dropdown-menu">
+                      
+                      <ul class="dropdown-menu" style={{padding: '5px'}}>
                         <li><div style={{textAlign:'center', width:'100%'}}>{user?.id}</div></li>
+                        <li><hr/></li>
                         <li><button style={{borderRadius:0, width:'100%'}} type="button" class="btn btn-primary" onClick={onLogout} >Log out</button></li>
                     </ul>
                     </li>

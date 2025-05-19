@@ -12,6 +12,7 @@ import Login from './components/login';
 import { Dashboard } from './components/dashboard';
 import { CreatePoll } from './components/create_poll';
 import { QuestionDetail } from './components/question_detail';
+import { Leaderboard } from './components/leaderboard';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { faCheckSquare, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -30,6 +31,7 @@ root.render(
         <Route path="/create" element={<CreatePoll />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/question/:question_id" element={<QuestionDetail />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
     </Routes>
     </Provider>
     </BrowserRouter>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { _getUsers } from '../_DATA';
-import { login, selectUser } from '../reducers/login';
+import { login, selectUser, loadUsers } from '../reducers/login';
 import { useNavigate } from "react-router";
 
 
@@ -17,15 +17,16 @@ export default function Login() {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({ username: "", password: "" });
 
-    async function loadUsers() {
+    async function loadUsersFromFile() {
         const usersObject = await _getUsers();
         users = Object.values(usersObject);
         console.log("users", users);
+        dispatch(loadUsers(users));
     }
     
     useEffect( () => {
         // Load list of users on initial rendering:
-        loadUsers();
+        loadUsersFromFile();
     }, [])
 
     useEffect( () => {
