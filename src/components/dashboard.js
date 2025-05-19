@@ -1,4 +1,5 @@
-import {useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from "react-router";
 import { MenuBar } from './menu-bar';
 import { useSelector, useDispatch } from 'react-redux';
 import { _getQuestions, _saveQuestion, _saveQuestionAnswer } from '../_DATA';
@@ -28,7 +29,7 @@ function QuestionTable({questionList, showOwnAnswer} ) {
             questionList.map( (q, index) => {
               return <tr key={q.id}>
                 <td>{index+1}</td>
-                <td>{fullQuestion(q)}</td>
+                <td><Link to={"/question/" + q.id}>{fullQuestion(q)}</Link></td>
                 <td>{q.author}</td>
                 <td>{q.timestamp}</td>
                 {showOwnAnswer ?? <td>{q.answer}</td>}
