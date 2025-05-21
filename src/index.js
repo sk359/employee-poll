@@ -28,7 +28,7 @@ root.render(
     <Provider store={store}>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/create" element={<CreatePoll />} />
+        <Route path="/add" element={<CreatePoll />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/question/:question_id" element={<QuestionDetail />} />
         <Route path="/leaderboard" element={<Leaderboard />} />

@@ -14,6 +14,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
+To login you can use the credentials from the file `_DATA.js`, so for example login with johndoe and password 789.
+
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\

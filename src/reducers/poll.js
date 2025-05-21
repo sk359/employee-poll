@@ -7,27 +7,12 @@ const initialState = {
   newPoll: null,
   user: null,
   status: 'idle',
-  questions: []
+  questions: [],
+  lastAnswer: null
 };
 
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched. Thunks are
-// typically used to make async requests.
-/*
-export const createPollAsync = createAsyncThunk(
-  'poll/create',
-  async (poll) => {
-    const response = await createPoll(poll);
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
-  }
-);
-*/
-
 export const loadQuestionsAsync =  createAsyncThunk(
-  'poll/load',
+  'poll/loadQuestions',
   async () => {
     const response = await _getQuestions();
     // The value we return becomes the `fulfilled` action payload
@@ -44,6 +29,15 @@ export const createQuestionsAsync =  createAsyncThunk(
   }
 );
 
+export const saveAnswerAsync =  createAsyncThunk(
+  'poll/saveAnswer',
+  async (answer) => {
+    const response = await  _saveQuestionAnswer(answer);
+    // The value we return becomes the `fulfilled` action payload
+    return response;
+  }
+);
+
 export const pollSlice = createSlice({
   name: 'poll',
   initialState,
@@ -53,16 +47,14 @@ export const pollSlice = createSlice({
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      console.log("state.questions", action.payload);
+      // immutable state based off those changes      
       state.questions = Object.values(action.payload); // object => array
     },    
     create: (state, action) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      console.log("poll reducer", action.payload);
+      // immutable state based off those changes      
       state.authenticatedUser = action.payload;
     },    
   },
@@ -75,17 +67,23 @@ export const pollSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(loadQuestionsAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.questions = action.payload;
+        state.status = 'idle';        
+        state.questions = Object.values(action.payload);
       })
       .addCase(createQuestionsAsync.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(createQuestionsAsync.fulfilled, (state, action) => {
-        console.log("create", action);
+      .addCase(createQuestionsAsync.fulfilled, (state, action) => {        
         state.status = 'idle';
-        state.questions = [..._getQuestions.state.questions, action.payload];
+        state.questions = [...state.questions, action.payload];
         state.newPoll = action.payload
+      })
+      .addCase(saveAnswerAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(saveAnswerAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.lastAnswer = action.payload;        
       });
   },
   
@@ -99,5 +97,6 @@ export const { load, create } = pollSlice.actions;
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const questionsSelector = (state) => state.poll.questions;
+export const loadStatusSelector = (state) => state.poll.status;
 
 export default pollSlice.reducer;

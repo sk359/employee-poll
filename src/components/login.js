@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { _getUsers } from '../_DATA';
-import { login, selectUser, loadUsers } from '../reducers/login';
+import { login, selectUser, loadUsersFromFile, selectUserList } from '../reducers/login';
 import { useNavigate } from "react-router";
 
-
-let users = [];
 
 
 export default function Login() {
@@ -14,38 +11,25 @@ export default function Login() {
     // useSelector() will also subscribe to the Redux store, and run your selector whenever an action is dispatched.
     // Each call to useSelector() creates an individual subscription to the Redux store
     const authenticatedUser = useSelector(selectUser);
+    const users = useSelector(selectUserList);
     const dispatch = useDispatch();
-    const [formData, setFormData] = useState({ username: "", password: "" });
-
-    async function loadUsersFromFile() {
-        const usersObject = await _getUsers();
-        users = Object.values(usersObject);
-        console.log("users", users);
-        dispatch(loadUsers(users));
-    }
+    const [formData, setFormData] = useState({ username: "", password: "" });    
     
     useEffect( () => {
-        // Load list of users on initial rendering:
-        loadUsersFromFile();
+        // Load list of users on initial rendering:        
+        dispatch(loadUsersFromFile());
     }, [])
 
     useEffect( () => {
-        // Triggered after the user in the store was changed:
-        console.log("ath changed", authenticatedUser);
-        if (authenticatedUser !== null) {
-          console.log("effect user", authenticatedUser);
+        // Triggered after the user in the store was changed:        
+        if (authenticatedUser !== null) {          
           navigate("/dashboard");
         }
     }, [authenticatedUser])
 
     function handleSubmit(event) {
-        event.preventDefault(); // prevent page refresh on submit
-      console.log("submit", event);
-      const user = getUserForCredentials(formData.username, formData.password);
-      console.log("submit user", user);
-      if (user === null) {
-        console.log("not valid");
-      }
+        event.preventDefault(); // prevent page refresh on submit      
+      const user = getUserForCredentials(formData.username, formData.password);      
       dispatch(login(user)); // update store with authenticated user, user = payload of the action
     }
 
@@ -67,7 +51,9 @@ export default function Login() {
     }
 
     return(
-        <div id="login-wrapper">          
+      <div style={{height: '100%', textAlign: 'center', padding: '20px'}}>
+        <h2>Employee Poll</h2>   
+        <div id="login-wrapper">               
         <form onSubmit={handleSubmit}>
             <div class="mb-3">
                 <label for="userName" class="form-label">User</label>
@@ -79,6 +65,7 @@ export default function Login() {
             </div>  
             <button type="submit" class="btn btn-primary">Log In</button>
         </form>
+        </div>
         </div>
     )
 }

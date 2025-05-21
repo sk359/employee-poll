@@ -32,7 +32,7 @@ export function MenuBar() {
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li class="nav-item" style={{marginRight: "15px"}}>
-                      <Link to="/create">Create Poll</Link>
+                      <Link to="/add">Create Poll</Link>
                     </li>    
                     <li class="nav-item" style={{marginRight: "15px"}}>
                       <Link to="/leaderboard">Leaderboard</Link>
