@@ -4,11 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router";
 import { selectUser, logout } from '../reducers/login';
+import { loadStatusSelector } from '../reducers/poll';
 
 
 export function MenuBar() {
     const navigate = useNavigate();
     const user = useSelector(selectUser);
+    const loadStatus = useSelector(loadStatusSelector);
     const dispatch = useDispatch();        
 
     useEffect( () => {
@@ -20,6 +22,10 @@ export function MenuBar() {
 
     function onLogout() {      
       dispatch(logout()); 
+    }
+
+    function isLoading() {
+      return loadStatus === 'loading';
     }
 
     return (
@@ -36,7 +42,8 @@ export function MenuBar() {
                     </li>    
                     <li class="nav-item" style={{marginRight: "15px"}}>
                       <Link to="/leaderboard">Leaderboard</Link>
-                    </li>        
+                    </li>   
+                    {isLoading() ? <li><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></li> : null}     
                     <li id="menubar-user-icon" class="nav-item btn-group dropstart" style={{padding: "15px"}}>
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><FontAwesomeIcon icon="user" /></a>
                       
