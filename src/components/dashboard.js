@@ -57,19 +57,12 @@ function QuestionTable({questionList, showOwnAnswer, authUser} ) {
 let openQuestions = [];
 let answeredQuestions = [];
 
-export function Dashboard() {
+export default function Dashboard() {
   const questions = useSelector(questionsSelector);
   const authenticatedUser = useSelector(selectUser);
-  const dispatch = useDispatch();  
+  const dispatch = useDispatch();   
 
-  /*
-  async function loadQuestions() {
-    //const response = await _getQuestions();
-    dispatch(loadQuestionsAsync());
-  }
-    */
-
-  useEffect( () => {    
+  useEffect( () => {     
     dispatch(loadQuestionsAsync());
   }, []) // [] = only on initial rendering
 
@@ -77,7 +70,7 @@ export function Dashboard() {
     // Re-filter lists of answered and open questions when the list is reloaded:
     if (!authenticatedUser) {
       return;
-    }
+    }    
     const answers = Object.keys(authenticatedUser.answers);    
     openQuestions = orderBy(questions.filter( (question) => !answers.includes(question.id)), ['timestamp'], ['desc']);
     answeredQuestions = orderBy(questions.filter( (question) => answers.includes(question.id)), ['timestamp'], ['desc']);
@@ -86,22 +79,22 @@ export function Dashboard() {
   return (
       <div>
         <MenuBar />
-        <div class="main-content">
+        <div className="main-content">
           <h3 style={{textAlign: 'center', padding: '5px'}}>Dashboard</h3>
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#questions-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Open Questions</button>
+          <ul className="nav nav-tabs" id="myTab" role="tablist">
+            <li className="nav-item" role="presentation">
+              <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#questions-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Open Questions</button>
             </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#leaderboard-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Answered Questions</button>
+            <li className="nav-item" role="presentation">
+              <button className="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#leaderboard-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Answered Questions</button>
             </li>
           </ul>
 
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="questions-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+          <div className="tab-content" id="myTabContent">
+            <div className="tab-pane fade show active" id="open-questions-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
               <QuestionTable questionList={openQuestions} showOwnAnswer={false} authUser={authenticatedUser}/>          
             </div>
-            <div class="tab-pane fade" id="leaderboard-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+            <div className="tab-pane fade" id="leaderboard-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
               <QuestionTable questionList={answeredQuestions} showOwnAnswer={true} authUser={authenticatedUser}/>
             </div>          
           </div>

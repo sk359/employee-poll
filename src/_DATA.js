@@ -156,6 +156,7 @@ export function _saveQuestion (question) {
     const formattedQuestion = formatQuestion(question)
 
     setTimeout(() => {
+      try {
       questions = {
         ...questions,
         [formattedQuestion.id]: formattedQuestion
@@ -170,6 +171,9 @@ export function _saveQuestion (question) {
       }
 
       res(formattedQuestion)
+    } catch(err) {
+      rej(err);
+    }
     }, 1000)
   })
 }
@@ -177,6 +181,7 @@ export function _saveQuestion (question) {
 export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
   return new Promise((res, rej) => {
     setTimeout(() => {
+      try {
       users = {
         ...users,
         [authedUser]: {
@@ -198,8 +203,12 @@ export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
           }
         }
       }
-
       res()
+      } catch(err) {
+        rej(err);
+      }
+
+      
     }, 500)
   })
 }

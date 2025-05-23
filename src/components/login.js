@@ -50,20 +50,24 @@ export default function Login() {
       setFormData({...formData, password: event.target.value});
     }
 
+    function disableSubmit() {
+      return !formData.password || !formData.username;
+    }
+
     return(
       <div style={{height: '100%', textAlign: 'center', padding: '20px'}}>
         <h2>Employee Poll</h2>   
         <div id="login-wrapper">               
         <form onSubmit={handleSubmit}>
-            <div class="mb-3">
-                <label for="userName" class="form-label">User</label>
-                <input type="text" class="form-control" id="userName" onChange={changeUser} value={formData.username}/>    
+            <div className="mb-3">
+                <label htmlFor="userName" className="form-label">User</label>
+                <input type="text" className="form-control" data-testid="username-input" id="userName" onChange={changeUser} value={formData.username}/>    
             </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" onChange={changePassword} id="exampleInputPassword1" value={formData.password}/>
+            <div className="mb-3">
+                <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                <input type="password" className="form-control" data-testid="password-input" onChange={changePassword} id="exampleInputPassword1" value={formData.password}/>
             </div>  
-            <button type="submit" class="btn btn-primary">Log In</button>
+            <button type="submit" disabled={disableSubmit()} className="btn btn-primary">Log In</button>
         </form>
         </div>
         </div>
