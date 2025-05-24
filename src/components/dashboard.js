@@ -14,6 +14,9 @@ function QuestionTable({questionList, showOwnAnswer, authUser} ) {
   }
 
   function getAnswerForQuestion(question) {
+    if (!authUser) {
+      return "";
+    }
     const option = authUser.answers[question.id];
     if (option === 'optionOne') {
       return question.optionOne.text;
