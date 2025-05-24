@@ -9,7 +9,7 @@ import App from './App';
 //import reportWebVitals from './reportWebVitals';
 import './index.css';
 import Login from './components/login';
-import { Dashboard } from './components/dashboard';
+import Dashboard from './components/dashboard';
 import { CreatePoll } from './components/create_poll';
 import { QuestionDetail } from './components/question_detail';
 import { Leaderboard } from './components/leaderboard';
