@@ -10,6 +10,7 @@ import App from './App';
 import './index.css';
 import Login from './components/login';
 import Dashboard from './components/dashboard';
+import {PageNotFound} from './components/page_not_found';
 import { CreatePoll } from './components/create_poll';
 import { QuestionDetail } from './components/question_detail';
 import { Leaderboard } from './components/leaderboard';
@@ -28,10 +29,12 @@ root.render(
     <Provider store={store}>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/add" element={<CreatePoll />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/question/:question_id" element={<QuestionDetail />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="*" element={<PageNotFound />} />
     </Routes>
     </Provider>
     </BrowserRouter>

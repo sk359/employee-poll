@@ -34,7 +34,8 @@ export const loginSlice = createSlice({
       // immutable state based off those changes      
       state.authenticatedUser = action.payload;
     },    
-    logout: (state) => {            
+    logout: (state) => {     
+      console.log("LOGOUT");       
       state.authenticatedUser = null;
     },
     loadUsers: (state, action) => {      
