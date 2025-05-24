@@ -15,14 +15,14 @@ export default function Login() {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({ username: "", password: "" });    
     
-    useEffect( () => {
+    useEffect( () => {      
         // Load list of users on initial rendering:        
         dispatch(loadUsersFromFile());
     }, [])
 
-    useEffect( () => {
+    useEffect( () => {      
         // Triggered after the user in the store was changed:        
-        if (authenticatedUser !== null) {          
+        if (authenticatedUser) {          
           navigate("/dashboard");
         }
     }, [authenticatedUser])

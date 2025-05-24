@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { selectUser, selectUserList, login, loadUsersFromFile } from '../reducers/login';
 import { MenuBar } from './menu-bar';
 import { questionsSelector, saveAnswerAsync } from '../reducers/poll';
@@ -37,11 +37,11 @@ export function QuestionDetail() {
     const userList = useSelector(selectUserList);
     const authenticatedUser = useSelector(selectUser);
     const [showAnswer, setShowAnswer] = useState(false);
-    const [question, setQuestion] = useState(null);
-    const [show404, setShow404] = useState(false);
+    const [question, setQuestion] = useState(null);    
     const [answerByUser, setAnswerByUser] = useState(null);
     const questions = useSelector(questionsSelector);
     const dispatch = useDispatch();   
+    const navigate = useNavigate();
    
 
     async function _loadUsersFromFile() {
@@ -59,7 +59,7 @@ export function QuestionDetail() {
       //const questions = await _getQuestions();        
       const questionTemp = questions.filter( q => q.id === question_id)[0];
       if (!questionTemp) {
-        setShow404(true);
+        navigate("/page-not-found");
         return;
       }
       for (const u of userList) {
@@ -125,7 +125,7 @@ export function QuestionDetail() {
     return (
         <div>
           <MenuBar />
-          {!show404 && (<div style={{textAlign: 'center', width: '60%', marginLeft: '20%'}}>
+          <div style={{textAlign: 'center', width: '60%', marginLeft: '20%'}}>
             <h4>Poll by {user?.id}</h4>
             <img src={user?.avatarURL}/>
             <h4 class="mb-5">Would you rather</h4>
@@ -156,10 +156,7 @@ export function QuestionDetail() {
             {showAnswer && displayAnswer()}
             
           </div>)
-           }
-
-           {show404 && <div style={{marginTop: '30px'}}><div class="alert alert-error" role="alert">Could not find question with ID {question_id}</div></div>}
-
+           
         </div>
     ) 
 

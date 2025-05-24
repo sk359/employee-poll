@@ -14,9 +14,9 @@ export function MenuBar() {
     const dispatch = useDispatch();        
 
     useEffect( () => {
-      // Navigate to Log In page if no user is authenticated
-      if (user === null) {        
-        navigate("/");
+      // Navigate to Log In page if no user is authenticated      
+      if (!user) {           
+        navigate("/login");
       }
     }, [user])
 
