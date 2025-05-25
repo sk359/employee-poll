@@ -23,7 +23,8 @@ export default function Login() {
 
     useEffect( () => {      
         // Triggered after the user in the store was changed:        
-        if (authenticatedUser) {    
+        if (authenticatedUser) {   
+          console.log("red", redirectPath); 
           if (redirectPath) {
             dispatch(setRedirectPath(null));   
             navigate(redirectPath);

@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router";
-import { selectUser, logout } from '../reducers/login';
+import { selectUser, logout, setRedirectPath } from '../reducers/login';
 import { loadStatusSelector } from '../reducers/poll';
 
 
@@ -15,7 +15,12 @@ export function MenuBar({toLoginWhenNoUser = true}) {
 
     useEffect( () => {
       // Navigate to Log In page if no user is authenticated      
-      if (!user && toLoginWhenNoUser) {           
+      if (!user && toLoginWhenNoUser) {    
+        console.log("base", window.location.pathname) 
+        const redirectTo = window.location.pathname;
+        if (redirectTo !== "/login") {       
+          dispatch(setRedirectPath(window.location.pathname));     
+        }  
         navigate("/login");
       }
     }, [user])
