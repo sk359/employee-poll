@@ -4,7 +4,8 @@ import { _getUsers } from '../_DATA';
 const initialState = {
   authenticatedUser: null,
   status: 'idle',
-  users: [] 
+  users: [], 
+  redirectAfterLogin: null 
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -40,6 +41,9 @@ export const loginSlice = createSlice({
     },
     loadUsers: (state, action) => {      
       state.users = action.payload;
+    },
+    setRedirectPath: (state, action) => {
+      state.redirectAfterLogin = action.payload;
     }    
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -60,12 +64,13 @@ export const loginSlice = createSlice({
 
 // export ActionCreators, return actions of type login/login and login/logout
 // Used as arguments for dispatch (the return value of useDispatch)
-export const { login, logout, loadUsers } = loginSlice.actions; 
+export const { login, logout, loadUsers, setRedirectPath } = loginSlice.actions; 
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectUser = (state) => state.login.authenticatedUser;
 export const selectUserList = (state) => state.login.users;
+export const selectRedirectPath = (state) => state.login.redirectAfterLogin;
 
 export default loginSlice.reducer;

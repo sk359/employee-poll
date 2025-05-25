@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { login, selectUser, loadUsersFromFile, selectUserList } from '../reducers/login';
+import { login, selectUser, loadUsersFromFile, selectUserList, selectRedirectPath, setRedirectPath } from '../reducers/login';
 import { useNavigate } from "react-router";
 
 
@@ -12,6 +12,7 @@ export default function Login() {
     // Each call to useSelector() creates an individual subscription to the Redux store
     const authenticatedUser = useSelector(selectUser);
     const users = useSelector(selectUserList);
+    const redirectPath = useSelector(selectRedirectPath);
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({ username: "", password: "" });    
     
@@ -22,8 +23,14 @@ export default function Login() {
 
     useEffect( () => {      
         // Triggered after the user in the store was changed:        
-        if (authenticatedUser) {          
-          navigate("/dashboard");
+        if (authenticatedUser) {   
+          console.log("red", redirectPath); 
+          if (redirectPath) {
+            dispatch(setRedirectPath(null));   
+            navigate(redirectPath);
+          } else {     
+            navigate("/dashboard");
+          }
         }
     }, [authenticatedUser])
 
