@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate } from "react-router";
-import { selectUser, selectUserList, login, loadUsersFromFile } from '../reducers/login';
+import { selectUser, selectUserList, login, loadUsersFromFile, setRedirectPath } from '../reducers/login';
 import { MenuBar } from './menu-bar';
 import { questionsSelector, saveAnswerAsync } from '../reducers/poll';
 
@@ -59,7 +59,8 @@ export function QuestionDetail() {
       //const questions = await _getQuestions();        
       const questionTemp = questions.filter( q => q.id === question_id)[0];
       if (!questionTemp) {
-        navigate("/page-not-found");
+        dispatch(setRedirectPath("/page_not_found"));   
+        navigate("/login");
         return;
       }
       for (const u of userList) {
