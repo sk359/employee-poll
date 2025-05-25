@@ -7,7 +7,7 @@ import { selectUser, logout } from '../reducers/login';
 import { loadStatusSelector } from '../reducers/poll';
 
 
-export function MenuBar() {
+export function MenuBar({toLoginWhenNoUser = true}) {
     const navigate = useNavigate();
     const user = useSelector(selectUser);
     const loadStatus = useSelector(loadStatusSelector);
@@ -15,7 +15,7 @@ export function MenuBar() {
 
     useEffect( () => {
       // Navigate to Log In page if no user is authenticated      
-      if (!user) {           
+      if (!user && toLoginWhenNoUser) {           
         navigate("/login");
       }
     }, [user])
