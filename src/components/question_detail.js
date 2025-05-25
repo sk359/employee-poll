@@ -124,7 +124,7 @@ export function QuestionDetail() {
 
     return (
         <div>
-          <MenuBar />
+          <MenuBar toLoginWhenNoUser={false} />
           <div style={{textAlign: 'center', width: '60%', marginLeft: '20%'}}>
             <h4>Poll by {user?.id}</h4>
             <img src={user?.avatarURL}/>
